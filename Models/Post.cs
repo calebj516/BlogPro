@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheBlogProject.Enums;
 
 namespace TheBlogProject.Models
 {
@@ -29,12 +30,14 @@ namespace TheBlogProject.Models
         [Display(Name = "Updated Date")]
         public DateTime? Updated { get; set; } // nullable, allowing the absence of a value
 
-        public bool IsReady { get; set; } // is ready to be viewed?
+
+        // public bool IsReady { get; set; } 
+        public ReadyStatus ReadyStatus { get; set; }
 
         public string Slug { get; set; } // derived programatically from the title that the user enters
 
         public byte[] ImageData { get; set; }
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } 
 
         [NotMapped]
         public IFormFile Image { get; set; }
