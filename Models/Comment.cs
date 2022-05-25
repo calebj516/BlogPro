@@ -8,7 +8,7 @@ namespace TheBlogProject.Models
     {
         public int Id { get; set; }
         public int PostId { get; set; } // foreign key (primary key from post class)
-        public string AuthorId { get; set; } // foreign key
+        public string BlogUserId { get; set; } // foreign key
         public string ModeratorId { get; set; } // foreign key
 
         [Required]
@@ -30,7 +30,7 @@ namespace TheBlogProject.Models
 
         // Navigation properties used by code to include additional information from the database
         public virtual Post Post { get; set; }
-        public virtual BlogUser Author { get; set; }
+        public virtual BlogUser BlogUser { get; set; }
         public virtual BlogUser Moderator { get; set; }
 
     }
