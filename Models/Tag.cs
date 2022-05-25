@@ -14,6 +14,6 @@ namespace TheBlogProject.Models
         public string Text { get; set; }
 
         public virtual Post Post { get; set; } // holds entire post record referred to by PostId
-        public virtual IdentityUser Author { get; set; }
+        public virtual BlogUser Author { get; set; }
     }
 }
