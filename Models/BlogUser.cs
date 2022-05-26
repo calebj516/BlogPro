@@ -9,24 +9,24 @@ namespace TheBlogProject.Models
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
         [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
         [Display(Name = "Display Name")]
-        public string DisplayName { get; set; }
+        public string? DisplayName { get; set; }
 
-        public byte[] ProfileImageData { get; set; }
-        public string ContentType { get; set; } // records specific type of file used for image
+        public byte[]? ProfileImageData { get; set; }
+        public string? ContentType { get; set; } // records specific type of file used for image
 
         [StringLength(250, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
-        public string FacebookUrl { get; set; }
+        public string? FacebookUrl { get; set; }
         [StringLength(250, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
-        public string TwitterUrl { get; set; }
+        public string? TwitterUrl { get; set; }
         [StringLength(250, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
-        public string GithubUrl { get; set; }
+        public string? GithubUrl { get; set; }
 
         [NotMapped]
         public string FullName
@@ -39,7 +39,7 @@ namespace TheBlogProject.Models
 
         public virtual ICollection<Blog> Blogs { get; set; } = new HashSet<Blog>();
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
-        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+        //public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
     }
 }

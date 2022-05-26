@@ -8,13 +8,13 @@ namespace TheBlogProject.Models
     {
         public int Id { get; set; }
         public int PostId { get; set; } // foreign key (primary key from post class)
-        public string BlogUserId { get; set; } // foreign key
-        public string ModeratorId { get; set; } // foreign key
+        public string? BlogUserId { get; set; } // foreign key
+        public string? ModeratorId { get; set; } // foreign key
 
         [Required]
         [StringLength(500, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
         [Display(Name = "Comment")]
-        public string Body { get; set; }
+        public string? Body { get; set; }
         
 
         public DateTime Created { get; set; }
@@ -24,14 +24,14 @@ namespace TheBlogProject.Models
 
         [StringLength(500, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
         [Display(Name = "Moderated Comment")]
-        public string ModeratedBody { get; set; }
+        public string? ModeratedBody { get; set; }
 
         public ModerationType ModerationType { get; set; }
 
         // Navigation properties used by code to include additional information from the database
-        public virtual Post Post { get; set; }
-        public virtual BlogUser BlogUser { get; set; }
-        public virtual BlogUser Moderator { get; set; }
+        public virtual Post? Post { get; set; }
+        public virtual BlogUser? BlogUser { get; set; }
+        public virtual BlogUser? Moderator { get; set; }
 
     }
 }
