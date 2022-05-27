@@ -5,13 +5,19 @@ using TheBlogProject.Data;
 using TheBlogProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+
+// Commented out the two lines below and then pasted the same code, but with "DefaultConnection" passed in to the GetConnectionString method instead of "ApplicationDbContextConnection". This was causing an error - 5/26/2022 CJ
+//var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();;
+// ERROR: "InvalidOperationException: Scheme already exists: Identity.Application"
+// see more at https://stackoverflow.com/questions/51161729/addidentity-fails-invalidoperationexception-scheme-already-exists-identity
+// Resolved this by commenting out the two lines below (5/26/2022 CJ):
+//builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();;
 
 // Add services to the container.
 // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
