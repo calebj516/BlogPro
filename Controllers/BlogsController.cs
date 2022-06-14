@@ -62,6 +62,8 @@ namespace TheBlogProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                blog.Created = DateTime.Now;
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

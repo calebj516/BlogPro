@@ -46,6 +46,10 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Added line of code below (referencing stackoverflow, see the link) to resolve an exception that occured after adding the ability for the blog controller to record the date and time the blog was first created
+// https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
