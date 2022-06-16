@@ -8,6 +8,8 @@ namespace TheBlogProject.Models
     public class Post
     {
         public int Id { get; set; }
+
+        [Display(Name = "Blog Name")]
         public int? BlogId { get; set; } // foreign key (primary key in Blog class)
         public string? BlogUserId { get; set; }
 
