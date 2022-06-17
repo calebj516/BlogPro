@@ -37,11 +37,11 @@ namespace TheBlogProject.Controllers
         //Use my soft delete boolean
         //}
 
-        //public async Task<IActionResult> Index()
-        //{
-        //    var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
-        //    return View(await applicationDbContext.ToListAsync());
-        //}
+        public async Task<IActionResult> Index()
+        {
+            var allComments = await _context.Comments.ToListAsync();
+            return View(allComments);
+        }
 
         // GET: Comments/Details/5
         public async Task<IActionResult> Details(int? id)
