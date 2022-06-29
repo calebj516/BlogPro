@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TheBlogProject.Data;
 using TheBlogProject.Models;
+using TheBlogProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,9 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+
+// Register my custom DataService class
+builder.Services.AddScoped<DataService>();
 
 var app = builder.Build();
 
