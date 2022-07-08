@@ -50,6 +50,12 @@ builder.Services.AddScoped<DataService>();
 
 var app = builder.Build();
 
+// Pull out my registered DataService
+// .NET 5 - var dataService = host.Services.CreateScope().ServiceProvider.GetRequiredService<DataService>();
+var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataService>();
+
+await dataService.ManageDataAsync();
+
 // Added line of code below (referencing stackoverflow, see the link) to resolve an exception that occured after adding the ability for the blog controller to record the date and time the blog was first created
 // https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
