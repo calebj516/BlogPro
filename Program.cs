@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TheBlogProject.Data;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
+using TheBlogProject.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,10 @@ builder.Services.AddRazorPages();
 
 // Register my custom DataService class
 builder.Services.AddScoped<DataService>();
+
+// Register a preconfigured instance of the MailSettings class
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<IBlogEmailSender, EmailService>();
 
 var app = builder.Build();
 
