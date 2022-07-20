@@ -1,3 +1,4 @@
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +53,9 @@ builder.Services.AddScoped<DataService>();
 // Register a preconfigured instance of the MailSettings class
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+
+// reCaptcha service
+builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
@@ -32,6 +33,7 @@ namespace TheBlogProject.Controllers
             return View();
         }
 
+        [ValidateReCaptcha]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contact(ContactMe model)
