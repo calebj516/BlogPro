@@ -57,6 +57,9 @@ builder.Services.AddScoped<IBlogEmailSender, EmailService>();
 // reCaptcha service
 builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
 
+// Register our Image Service
+builder.Services.AddScoped<IImageService, BasicImageService>();
+
 var app = builder.Build();
 
 // Pull out my registered DataService
