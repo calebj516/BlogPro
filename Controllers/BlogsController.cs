@@ -53,7 +53,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Blogs/Create
-        [Authorize]
+        //[Authorize] // uncommenting this line will make the create view inaccessible to anyone who is not logged in
         public IActionResult Create()
         {
             // Commented out line below because Id is not used directly on the form in Create.cshtml
