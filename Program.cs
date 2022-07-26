@@ -60,6 +60,9 @@ builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
 // Register our Image Service
 builder.Services.AddScoped<IImageService, BasicImageService>();
 
+// Register the Slug Services
+builder.Services.AddScoped<ISlugService, BasicSlugService>();
+
 var app = builder.Build();
 
 // Added line of code below (referencing stackoverflow, see the link) to resolve an exception that occured after adding the ability for the blog controller to record the date and time the blog was first created
