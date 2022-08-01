@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
+                <textarea asp-for="Content" id="content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
@@ -49,7 +49,7 @@
 
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input type="file" asp-for="Image" class="form-control" />
+                <input type="file" name="NewImage" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
 
@@ -65,6 +65,18 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function() {
+            $('#content').summernote({
+                placeholder: "Post Body"
+            });
+        });
+    </script>
+
 }
