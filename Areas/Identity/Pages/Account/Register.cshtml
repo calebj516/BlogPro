@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
             <h2>Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -36,6 +36,20 @@
                 <label asp-for="Input.Email" for="email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+
+            <div class="form-floating form-group">
+                <input asp-for="Input.ImageFile" id="img" class="form-control" type="file" placeholder="Select Image" accept=".png,.jpeg,.bmp,.tif" />
+                <label asp-for="Input.ImageFile" for="img"></label>
+                <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
+            </div>
+
+@*            <div class="form-floating form-group">
+                <label>Select Image</label>
+                <div class="custom-file">
+                    <input asp-for="Input.ImageFile" id="img" type="file" class="form-control-file custom-file-input" />
+                    <label asp-for="Input.ImageFile" for="img" class="control-label custom-file-label">Choose</label>
+                </div>
+            </div>*@
 
             <div class="form-floating form-group">
                 <input asp-for="Input.Password" id="pw" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password"/>
