@@ -121,6 +121,14 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            // If and only if the user selected a new image will their profile be updated.
+            if(Input.ImageFile is not null)
+            {
+                user.ProfileImageData = await _imageService.EncodeImageAsync(Input.ImageFile);
+                user.ContentType = _imageService.ContentType(Input.ImageFile);
+                await _userManager.UpdateAsync(user);
+            }
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
