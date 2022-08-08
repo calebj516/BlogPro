@@ -36,15 +36,22 @@ namespace TheBlogProject.Controllers
 
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(string slug)
         {
             if (id == null || _context.Posts == null)
             {
                 return NotFound();
             }
 
+            //if (string.IsNullOrEmpty(slug))
+            //{
+            //    return NotFound();
+            //}
+
             var post = await _context.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.BlogUser)
+                .Include(p => p.Tags)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {

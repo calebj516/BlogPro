@@ -29,3 +29,7 @@ function DeleteTag() {
     }
 
 }
+
+$("#CreatePost").on("submit", function () {
+    $("#TagList option").prop("selected", true);
+});
