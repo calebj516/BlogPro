@@ -90,9 +90,24 @@ namespace TheBlogProject.Controllers
                 // Create the slug and determine if it is unique
                 var slug = _slugService.UrlFriendly(post.Title);
 
+                // Create a variable to store whether an error has occurred
+                var validationError = false;
+
+                if (string.IsNullOrEmpty(slug))
+                {
+                    validationError = true;
+                    ModelState.AddModelError("", "The Title you provided cannot be used due to it being empty.");
+                }
+
+                // Detect incoming duplicate Slugs
                 if (!_slugService.IsUnique(slug))
                 {
-                    ModelState.AddModelError("Title", "The Title you provided cannot be used due to it resulting in a duplicate slug.");
+                    validationError = true;
+                    ModelState.AddModelError("Title", "The Title you provided cannot be used due to it resulting in a duplicate value.");
+                }
+
+                if (validationError)
+                {
                     ViewData["TagValues"] = string.Join(",", tagValues);
                     return View(post);
                 }
@@ -102,7 +117,6 @@ namespace TheBlogProject.Controllers
                 _context.Add(post);
                 await _context.SaveChangesAsync();
 
-                // How do I loop over the incoming list of string?
                 foreach(var tagText in tagValues)
                 {
                     _context.Add(new Tag()
@@ -159,23 +173,40 @@ namespace TheBlogProject.Controllers
             {
                 try
                 {
-                    var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
+                    // originalPost: a copy of the post from the database before any edits are applied.
+                    var originalPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
 
-                    newPost.Updated = DateTime.Now;
-                    newPost.Title = post.Title;
-                    newPost.Abstract = post.Abstract;
-                    newPost.Content = post.Content;
-                    newPost.ReadyStatus = post.ReadyStatus;
+                    originalPost.Updated = DateTime.Now;
+                    originalPost.Title = post.Title;
+                    originalPost.Abstract = post.Abstract;
+                    originalPost.Content = post.Content;
+                    originalPost.ReadyStatus = post.ReadyStatus;
 
+                    var newSlug = _slugService.UrlFriendly(post.Title);
+
+                    if(newSlug != originalPost.Slug)
+                    {
+                        if (_slugService.IsUnique(newSlug))
+                        {
+                            originalPost.Title = post.Title;
+                            originalPost.Slug = newSlug;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Title", "The Title you provided cannot be used due to it resulting in a duplicate value.");
+                            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+                            return View(post);
+                        }
+                    }
 
                     if (newImage is not null)
                     {
-                        newPost.ImageData = await _imageService.EncodeImageAsync(newImage);
-                        newPost.ContentType = _imageService.ContentType(newImage);
+                        originalPost.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        originalPost.ContentType = _imageService.ContentType(newImage);
                     }
 
                     // Remove all Tags previously associated with this Post
-                    _context.Tags.RemoveRange(newPost.Tags);
+                    _context.Tags.RemoveRange(originalPost.Tags);
                     
                     // Add in the new Tags from the Edit form
                     foreach(var tagText in tagValues)
@@ -183,7 +214,7 @@ namespace TheBlogProject.Controllers
                         _context.Add(new Tag()
                         {
                             PostId = post.Id,
-                            BlogUserId = newPost.BlogUserId,
+                            BlogUserId = originalPost.BlogUserId,
                             Text = tagText
                         });
                     }
