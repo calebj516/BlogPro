@@ -96,6 +96,9 @@
 @section Scripts{
 
     <script>
+
+        let tagValues = '@ViewData["TagValues"]';
+
         $(document).ready(function() {
             $('#content').summernote({
                 placeholder: "Post Body"
@@ -103,5 +106,6 @@
         });
     </script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/Custom.js"></script>
 }
