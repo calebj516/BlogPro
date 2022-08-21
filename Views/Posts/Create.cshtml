@@ -5,12 +5,10 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Post</h4>
-<hr />
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 mx-auto">
+        <h1>Create Post</h1>
+        <hr />
         <form id="CreatePost" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -82,11 +80,10 @@
                 <button type="submit" value="Create" class="col-12 btn btn-dark btn-tag btn-primary">CREATE</button>
             </div>
         </form>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @*@section Scripts {

@@ -15,3 +15,12 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
     outline: 4px solid black;
     border: 2px solid #ff993b;
 }
+
+.nav-item > form > button {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.0625em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    color: white;
+}
