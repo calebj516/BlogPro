@@ -100,10 +100,17 @@ namespace TheBlogProject.Controllers
                 }
 
                 // Detect incoming duplicate Slugs
-                if (!_slugService.IsUnique(slug))
+                else if (!_slugService.IsUnique(slug))
                 {
                     validationError = true;
                     ModelState.AddModelError("Title", "The Title you provided cannot be used due to it resulting in a duplicate value.");
+                }
+
+                else if (slug.Contains("test") && slug.Length == 4)
+                {
+                    validationError = true;
+                    ModelState.AddModelError("", "Uh-oh! Are you testing again?");
+                    ModelState.AddModelError("Title", "The Title cannot contain the word 'test'.");
                 }
 
                 if (validationError)
