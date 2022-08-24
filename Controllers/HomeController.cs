@@ -6,6 +6,7 @@ using TheBlogProject.Data;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
 using TheBlogProject.ViewModels;
+using X.PagedList;
 
 namespace TheBlogProject.Controllers
 {
@@ -22,14 +23,26 @@ namespace TheBlogProject.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var blogs = await _context.Blogs
-                .Include(b => b.BlogUser)
-                .ToListAsync();
+            var pageNumber = page ?? 1; // if page is null, 1
+            var pageSize = 5;
 
+            // display all blogs, in descending order based on the date created, with at least one post that is in production ready status,
+            // with 5 blogs displayed per page.
+            //var blogs = _context.Blogs.Where(
+            //    b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
+            //    .OrderByDescending(b => b.Created)
+            //    .ToPagedListAsync(pageNumber, pageSize);
 
-            return View(blogs);
+            // The above commented-out code would cause the application to throw an error if there was a blog without a bloguser.
+            // This code below, specifically the .Include, fixes this by using "eager-loading".
+            var blogs = _context.Blogs
+            .Include(b => b.BlogUser)
+            .OrderByDescending(b => b.Created)
+            .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await blogs);
         }
 
         public IActionResult About()

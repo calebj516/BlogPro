@@ -26,6 +26,9 @@
     <PackageReference Include="Npgsql" Version="6.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
+    <PackageReference Include="X.PagedList" Version="8.0.7" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
+    <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
   </ItemGroup>
 
 </Project>
