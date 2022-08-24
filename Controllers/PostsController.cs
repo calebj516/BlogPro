@@ -55,6 +55,18 @@ namespace TheBlogProject.Controllers
         //    return View(post);
         //}
 
+        public async Task<IActionResult> BlogPostIndex(int? id)
+        {
+            if(id is null)
+            {
+                return NotFound();
+            }
+
+            var posts = _context.Posts.Where(p => p.BlogId == id).ToList();
+
+            return View("Index", posts);
+        }
+
         public async Task<IActionResult> Details(string slug)
         {
             if (string.IsNullOrEmpty(slug))
