@@ -37,7 +37,7 @@
             <tr>
                 @*DisplayFor displays the value associated with the property, not the property's name*@
                 <td>
-                    <img src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
+                    <img src="@imageService.DecodeImage(item.ImageData, item.ContentType)" class="img-fluid" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)

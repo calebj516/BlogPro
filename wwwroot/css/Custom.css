@@ -24,3 +24,12 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
     margin-top: 4px;
     color: white;
 }
+
+.search {
+    padding: 10px;
+}
+
+img {
+    max-height: 400px;
+    max-width 400px;
+}
