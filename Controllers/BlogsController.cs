@@ -53,7 +53,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Blogs/Create
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             // Commented out line below because Id is not used directly on the form in Create.cshtml
