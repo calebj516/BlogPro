@@ -1,7 +1,11 @@
 ﻿@using TheBlogProject.Services;
+@using Microsoft.AspNetCore.Identity
+
 @model TheBlogProject.Models.Post
 
 @inject IImageService imageService
+@*@inject UserManager<IdentityUser> userManager*@
+@inject UserManager<BlogUser> userManager
 
 @{
     ViewData["Title"] = "Details";
@@ -62,16 +66,52 @@
 
 <hr />
 
-<span class="btn btn-dark col-12">@Model.Comments.Count COMMENT(S)</span>
+<button id="commentSection" class="btn btn-dark col-12">@Model.Comments.Count COMMENT(S)</button>
 
 @foreach (var comment in Model.Comments)
 {
-    <div class="media media-border p-0 mb-2 bg-light">
+    <div class="media border-danger p-3 m-2 bg-light">
         <img class="mr-3 mt-3 rounded-circle" style="width:60px;" src="@imageService.DecodeImage(comment.BlogUser.ProfileImageData, comment.BlogUser.ContentType)" />
         <div class="media-body">
             <h4>@comment.BlogUser.FullName</h4>
             <small><i> Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
             <p>@comment.Body</p>
+
+            @if(comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
+            {
+                <hr />
+                <button data-bs-toggle="modal" data-bs-target="#editModal" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
+            }
+        </div>
+    </div>
+
+    @*Modals*@
+    <div id="editModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title">Editing Comment...</h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form asp-action="Edit" asp-controller="Comments">
+                        @Html.Hidden("Id", comment.Id)
+                        <div class="form-group">
+                            <textarea name="Body" class="form-control" required>@comment.Body</textarea>
+                        </div>
+
+                        <button class="btn-dark btn-sm border-success font-weight-bold" type="submit">SUBMIT</button>
+                    </form>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn-dark btn-sm font-weight-bold" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
         </div>
     </div>
 }
