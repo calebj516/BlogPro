@@ -110,7 +110,10 @@
             @if(comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
             {
                 <hr />
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
+                <div class="d-flex justify-content-end">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn-dark btn-sm font-weight-bold">EDIT</button>
+                </div>
+                
             }
 
             @*RENDER THE MODERATE AND DELETE BUTTONS*@
@@ -118,10 +121,10 @@
             {
                 <hr />
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#moderateModal_@comment.Id" class="btn-sm btn-dark font-weight-bold col-12">MODERATE</button>
                     </div>                    
-                    <div class="col-4">
+                    <div class="col-3">
                         <form asp-action="Delete" asp-controller="Comments">
                             @Html.Hidden("Id", comment.Id)
                             @Html.Hidden("Slug", comment.Post.Slug)
