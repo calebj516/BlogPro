@@ -111,7 +111,7 @@
             @if(comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
             {
                 <hr />
-                <button data-bs-toggle="modal" data-bs-target="@($"#editModal{counter}")" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
+                <button type="button" data-bs-toggle="modal" href="@($"#editModal{counter}")" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
             }
 
             @*RENDER THE MODERATE AND DELETE BUTTONS*@
@@ -120,8 +120,8 @@
                 <hr />
                 <div class="row">
                     <div class="col-2">
-                        <button data-bs-toggle="modal" data-bs-target="@($"#moderateModal{counter}")" class="btn-sm btn-dark font-weight-bold col-12">MODERATE</button>
-                    </div>
+                        <button type="button" data-bs-toggle="modal" href="@($"#moderateModal{counter}")" class="btn-sm btn-dark font-weight-bold col-12">MODERATE</button>
+                    </div>                    
                     <div class="col-2">
                         <form asp-action="Delete" asp-controller="Comments">
                             @Html.Hidden("Id", comment.Id)
@@ -135,7 +135,7 @@
     </div>
 
     @*Modals*@
-    <div id="@($"editModal{counter}")" class="modal">
+    <div id="@($"editModal{counter}")" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -164,7 +164,7 @@
         </div>
     </div>
 
-    <div id="@($"#moderateModal{counter}")" class="modal">
+    <div id="@($"moderateModal{counter}")" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
