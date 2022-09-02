@@ -69,7 +69,6 @@
 
 <button id="commentSection" class="btn btn-dark col-12">@Model.Comments.Count COMMENT(S)</button>
 
-@{ var counter = 0; }
 @foreach (var comment in Model.Comments)
 {
     <div class="media border-danger p-3 m-2 bg-light">
@@ -111,7 +110,7 @@
             @if(comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
             {
                 <hr />
-                <button type="button" data-bs-toggle="modal" href="@($"#editModal{counter}")" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn-dark btn-sm float-right font-weight-bold">EDIT</button>
             }
 
             @*RENDER THE MODERATE AND DELETE BUTTONS*@
@@ -119,10 +118,10 @@
             {
                 <hr />
                 <div class="row">
-                    <div class="col-2">
-                        <button type="button" data-bs-toggle="modal" href="@($"#moderateModal{counter}")" class="btn-sm btn-dark font-weight-bold col-12">MODERATE</button>
+                    <div class="col-4">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#moderateModal_@comment.Id" class="btn-sm btn-dark font-weight-bold col-12">MODERATE</button>
                     </div>                    
-                    <div class="col-2">
+                    <div class="col-4">
                         <form asp-action="Delete" asp-controller="Comments">
                             @Html.Hidden("Id", comment.Id)
                             @Html.Hidden("Slug", comment.Post.Slug)
@@ -135,7 +134,7 @@
     </div>
 
     @*Modals*@
-    <div id="@($"editModal{counter}")" class="modal fade">
+    <div id="editModal_@comment.Id" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -164,7 +163,7 @@
         </div>
     </div>
 
-    <div id="@($"moderateModal{counter}")" class="modal fade">
+    <div id="moderateModal_@comment.Id" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -211,5 +210,4 @@
         </div>
     </div>
 
-    counter++;
 }
