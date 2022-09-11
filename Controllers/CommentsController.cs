@@ -42,7 +42,7 @@ namespace TheBlogProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allComments = await _context.Comments.ToListAsync();
+            var allComments = await _context.Comments.Where(c => c.PostId == c.Post.Id).ToListAsync();
             return View(allComments);
         }
 
