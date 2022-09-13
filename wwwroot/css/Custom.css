@@ -30,8 +30,8 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
 }
 
 img {
-    max-height: 400px;
-    max-width 400px;
+    max-width: 100%;
+    height: auto;
 }
 
 /* CSS below added 9-11-22 */

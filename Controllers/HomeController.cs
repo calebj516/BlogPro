@@ -26,7 +26,7 @@ namespace TheBlogProject.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             var pageNumber = page ?? 1; // if page is null, 1
-            var pageSize = 5;
+            var pageSize = 6;
 
             // display all blogs, in descending order based on the date created, with at least one post that is in production ready status,
             // with 5 blogs displayed per page.
