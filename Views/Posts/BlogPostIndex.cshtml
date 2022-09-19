@@ -7,7 +7,6 @@
 @using X.PagedList.Web.Common
 
 
-
 @inject UserManager<BlogUser> userManager
 @inject IImageService imageService
 
@@ -37,13 +36,13 @@
 
                     <br />
                     <div class="text-center">
-                        <a class="btn btn-dark btn-sm col-12 mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
+                        <a class="btn btn-dark  col-12 mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
                     </div>
 
                     @if (User.IsInRole(BlogRole.Administrator.ToString()) || isAuthor)
                     {
                         <div class="text-center">
-                            <a class="btn btn-success btn-sm col-12 border-dark" asp-action="Edit" asp-controller="Posts" asp-route-id="@post.Id">Edit Post</a>
+                            <a class="btn btn-success  col-12 border-dark" asp-action="Edit" asp-controller="Posts" asp-route-id="@post.Id">Edit Post</a>
                         </div>
                     }
                 </div>

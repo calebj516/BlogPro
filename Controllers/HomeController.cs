@@ -37,10 +37,15 @@ namespace TheBlogProject.Controllers
 
             // The above commented-out code would cause the application to throw an error if there was a blog without a bloguser.
             // This code below, specifically the .Include, fixes this by using "eager-loading".
+
             var blogs = _context.Blogs
             .Include(b => b.BlogUser)
             .OrderByDescending(b => b.Created)
             .ToPagedListAsync(pageNumber, pageSize);
+
+            ViewData["HeaderImage"] = Url.Content("~/images/home-bg.png");
+            ViewData["MainText"] = "CF Blog Application";
+            ViewData["SubText"] = "Built using .NET 6 MVC & Bootstrap 5";
 
             return View(await blogs);
         }

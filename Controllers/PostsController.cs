@@ -11,6 +11,7 @@ using TheBlogProject.Models;
 using TheBlogProject.Services;
 using TheBlogProject.Enums;
 using X.PagedList;
+using TheBlogProject.ViewModels;
 
 namespace TheBlogProject.Controllers
 {
@@ -88,12 +89,34 @@ namespace TheBlogProject.Controllers
             return View(posts);
         }
 
+        //public async Task<IActionResult> Details(string slug)
+        //{
+        //    if (string.IsNullOrEmpty(slug))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var post = await _context.Posts
+        //        .Include(p => p.Blog)
+        //        .Include(p => p.BlogUser)
+        //        .Include(p => p.Tags)
+        //        .Include(p => p.Comments)
+        //        .ThenInclude(c => c.BlogUser)
+        //        .FirstOrDefaultAsync(m => m.Slug == slug);
+
+        //    if (post == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(post);
+        //}
+
+        // Updated Details View to use PostDetailViewModel
         public async Task<IActionResult> Details(string slug)
         {
-            if (string.IsNullOrEmpty(slug))
-            {
-                return NotFound();
-            }
+            ViewData["Title"] = "Post Details Page";
+            if (string.IsNullOrEmpty(slug)) return NotFound();
 
             var post = await _context.Posts
                 .Include(p => p.Blog)
@@ -103,12 +126,29 @@ namespace TheBlogProject.Controllers
                 .ThenInclude(c => c.BlogUser)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
-            if (post == null)
-            {
-                return NotFound();
-            }
+            if (post == null) return NotFound();
 
-            return View(post);
+            var dataVM = new PostDetailViewModel()
+            {
+                Post = post,
+                Tags = _context.Tags
+                        .Select(t => t.Text.ToLower())
+                        .Distinct().ToList()
+            };
+
+            //ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
+            if (post.ImageData != null)
+            {
+                ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
+            }
+            else
+            {
+                ViewData["HeaderImage"] = Url.Content("~/images/home-bg.png");
+            }
+            ViewData["MainText"] = post.Title;
+            ViewData["SubText"] = post.Abstract;
+
+            return View(dataVM);
         }
 
         // GET: Posts/Create
