@@ -32,6 +32,7 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
 img {
     max-width: 100%;
     height: auto;
+    object-fit: contain;
 }
 
 /* CSS below added 9-11-22 */
