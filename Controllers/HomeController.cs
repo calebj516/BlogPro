@@ -43,7 +43,7 @@ namespace TheBlogProject.Controllers
             .OrderByDescending(b => b.Created)
             .ToPagedListAsync(pageNumber, pageSize);
 
-            ViewData["HeaderImage"] = Url.Content("~/images/home-bg.png");
+            ViewData["HeaderImage"] = Url.Content("~/images/home-bg.jpg");
             ViewData["MainText"] = "CF Blog Application";
             ViewData["SubText"] = "Built using .NET 6 MVC & Bootstrap 5";
 
