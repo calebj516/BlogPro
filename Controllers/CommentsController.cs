@@ -68,7 +68,9 @@ namespace TheBlogProject.Controllers
                 comment.Created = DateTime.Now;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                var originalComment = await _context.Comments.Include(c => c.Post).FirstOrDefaultAsync(c => c.Id == comment.Id);
+                return RedirectToAction("Details", "Posts", new { slug = originalComment.Post.Slug }, "commentSection");
             }
 
             return View(comment);
