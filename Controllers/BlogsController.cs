@@ -135,6 +135,10 @@ namespace TheBlogProject.Controllers
                     {
                         newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
                     }
+                    else
+                    {
+                        blog.ImageData = await _imageService.EncodeImageAsync(newBlog.Image);
+                    }
 
                     await _context.SaveChangesAsync();
                 }
@@ -149,7 +153,8 @@ namespace TheBlogProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
