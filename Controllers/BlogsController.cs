@@ -135,10 +135,6 @@ namespace TheBlogProject.Controllers
                     {
                         newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
                     }
-                    else
-                    {
-                        blog.ImageData = await _imageService.EncodeImageAsync(newBlog.Image);
-                    }
 
                     await _context.SaveChangesAsync();
                 }
