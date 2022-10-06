@@ -42,7 +42,7 @@
 
                             <br />
                             <div class="text-center">
-                                <a class="btn btn-dark  col-12 mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.Id" >
+                                <a class="btn btn-dark col-12 mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.Id">
                                     Read Posts
                                 </a>
                             </div>
@@ -59,7 +59,7 @@
                             @if (User.IsInRole(BlogRole.Administrator.ToString()))
                             {
                                 <div class="text-center">
-                                    <a class="btn btn-warning col-12" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.Id">
+                                    <a class="btn btn-primary col-12" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.Id">
                                         Edit Blog
                                     </a>
                                 </div>

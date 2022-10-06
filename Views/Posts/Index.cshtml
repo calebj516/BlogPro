@@ -13,19 +13,19 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Abstract)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -33,15 +33,14 @@
         <tr>
             @*DisplayFor displays the value associated with the property, not the property's name*@
             <td>
-                <img src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Abstract)
             </td>
             <td>
+                    <img class="img-fluid" width="200px;" src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a> |
                 <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |

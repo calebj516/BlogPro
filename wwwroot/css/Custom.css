@@ -124,7 +124,7 @@ button.btn-sm, a.btn-sm {
     border-color: #ff993b;
 }
 
-.btn-warning:hover {
+.btn-warning:hover, .btn-success:hover, .btn-primary:hover {
     color: white;
     background-color: #212121;
     outline: 4px solid #ff993b;
