@@ -4,17 +4,19 @@
 @inject IImageService imageService
 @model IEnumerable<Post>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Post Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table">
+<table id="PostTable" class="table">
     <thead>
         <tr>
             <th>
@@ -26,6 +28,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Image)
             </th>
+            @*Empty th added in order for Datatables plug-in to function*@
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -50,3 +54,13 @@
 }
     </tbody>
 </table>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PostTable').DataTable();
+        });
+    </script>
+}
