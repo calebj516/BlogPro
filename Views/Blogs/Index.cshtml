@@ -3,11 +3,13 @@
 @inject IImageService imageService
 @model IEnumerable<TheBlogProject.Models.Blog>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Blog Index</h1>
 
 @if(User.IsInRole("Administrator")){
     <p>
@@ -15,7 +17,7 @@
     </p>
 }
 
-<table class="table">
+<table id="BlogTable" class="table">
     <thead>
         <tr>
             <th>
@@ -27,13 +29,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Created)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
+            <th class="ps-5">
                 @Html.DisplayNameFor(model => model.ImageData)
             </th>
-
+            @*Empty th added in order for Datatables plug-in to function*@
             <th></th>
         </tr>
     </thead>
@@ -50,9 +49,6 @@
                 @Html.DisplayFor(modelItem => blog.Created)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => blog.Updated)
-            </td>
-            <td>
                 <img class="img-fluid" width="200px;" src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"/>
             </td>
             <td>
@@ -64,3 +60,13 @@
 }
     </tbody>
 </table>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#BlogTable').DataTable();
+        });
+    </script>
+}

@@ -10,11 +10,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Post Index</h1>
+
+<h1 class="text-center">Post Index</h1>
+
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+
 
 <table id="PostTable" class="table">
     <thead>
@@ -25,7 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Abstract)
             </th>
-            <th>
+            <th class="ps-5">
                 @Html.DisplayNameFor(model => model.Image)
             </th>
             @*Empty th added in order for Datatables plug-in to function*@

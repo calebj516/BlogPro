@@ -27,6 +27,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Blogs
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Blogs.Include(b => b.BlogUser);
@@ -85,6 +86,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Blogs/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Blogs == null)
@@ -151,8 +153,8 @@ namespace TheBlogProject.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index));
+                //return RedirectToAction("Index", "Home");
             }
 
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
@@ -160,6 +162,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Blogs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Blogs == null)

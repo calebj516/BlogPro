@@ -12,6 +12,7 @@ using TheBlogProject.Services;
 using TheBlogProject.Enums;
 using X.PagedList;
 using TheBlogProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TheBlogProject.Controllers
 {
@@ -46,6 +47,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Posts
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
@@ -154,6 +156,7 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name");
@@ -261,6 +264,7 @@ namespace TheBlogProject.Controllers
         //    return View(post);
         //}
 
+        [Authorize]
         public async Task<IActionResult> Edit(string slug)
         {
             if (string.IsNullOrEmpty(slug))
@@ -383,6 +387,7 @@ namespace TheBlogProject.Controllers
         //    return View(post);
         //}
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(string slug)
         {
             if (string.IsNullOrEmpty(slug))
