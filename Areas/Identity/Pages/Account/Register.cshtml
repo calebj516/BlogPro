@@ -8,10 +8,8 @@
 <div class="row d-flex justify-content-center">
     <div class="col-lg-8 col-md-10">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
-            <div class="d-flex justify-content-center align-items-center">
-                <h2>Create A New Account</h2>
-            </div
-            <hr />
+            <h2 class="text-center">Create A New Account</h2>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="control-group">

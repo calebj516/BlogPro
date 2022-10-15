@@ -117,7 +117,7 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile? newImage)
         {
             if (id != blog.Id)
             {
@@ -146,7 +146,10 @@ namespace TheBlogProject.Controllers
                     {
                         newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newBlog.ContentType = _imageService.ContentType(newImage);
-
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Image", "Testing custom error!");
                     }
 
                     await _context.SaveChangesAsync();
