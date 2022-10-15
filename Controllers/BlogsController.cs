@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using TheBlogProject.Data;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
@@ -18,12 +19,14 @@ namespace TheBlogProject.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public BlogsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
+        public BlogsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager, IConfiguration configuration)
         {
             _context = context;
             _imageService = imageService;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         // GET: Blogs
@@ -73,8 +76,14 @@ namespace TheBlogProject.Controllers
             {
                 blog.Created = DateTime.Now;
                 blog.BlogUserId = _userManager.GetUserId(User);
-                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
-                blog.ContentType = _imageService.ContentType(blog.Image);
+
+                // Use the _imageService to store the incoming user specified image or a default image, if null
+                blog.ImageData = (await _imageService.EncodeImageAsync(blog.Image) ??
+                    await _imageService.EncodeImageAsync(_configuration["DefaultBlogImage"]));
+
+                blog.ContentType = _imageService.ContentType(blog.Image) ??
+                    Path.GetExtension(_configuration["DefaultBlogImage"]);
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
 

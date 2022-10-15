@@ -182,9 +182,8 @@ namespace TheBlogProject.Controllers
                 post.ImageData = (await _imageService.EncodeImageAsync(post.Image) ??
                     await _imageService.EncodeImageAsync(_configuration["DefaultPostImage"]));
 
-                post.ContentType = post.Image is null ?
-                    Path.GetExtension(_configuration["DefaultPostImage"]) :
-                                    _imageService.ContentType(post.Image);
+                post.ContentType = _imageService.ContentType(post.Image) ??
+                    Path.GetExtension(_configuration["DefaultPostImage"]);
 
 
                 // Create the slug and determine if it is unique
