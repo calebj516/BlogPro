@@ -128,28 +128,24 @@ namespace TheBlogProject.Controllers
             {
                 try
                 {
-                    var newBlog = await _context.Blogs.FindAsync(blog.Id);
+                    var originalBlog = await _context.Blogs.FindAsync(blog.Id);
 
-                    newBlog.Updated = DateTime.Now;
+                    originalBlog.Updated = DateTime.Now;
                     
-                    if(newBlog.Name != blog.Name)
+                    if(originalBlog.Name != blog.Name)
                     {
-                        newBlog.Name = blog.Name;
+                        originalBlog.Name = blog.Name;
                     }
 
-                    if(newBlog.Description != blog.Description)
+                    if(originalBlog.Description != blog.Description)
                     {
-                        newBlog.Description = blog.Description;
+                        originalBlog.Description = blog.Description;
                     }
 
                     if(newImage is not null)
                     {
-                        newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
-                        newBlog.ContentType = _imageService.ContentType(newImage);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Image", "Testing custom error!");
+                        originalBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        originalBlog.ContentType = _imageService.ContentType(newImage);
                     }
 
                     await _context.SaveChangesAsync();

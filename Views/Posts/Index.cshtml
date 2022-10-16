@@ -29,6 +29,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Abstract)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
             <th class="ps-5">
                 @Html.DisplayNameFor(model => model.Image)
             </th>
@@ -45,6 +48,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Abstract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
                     <img class="img-fluid" width="200px;" src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />

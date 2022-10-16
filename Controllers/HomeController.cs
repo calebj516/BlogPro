@@ -50,10 +50,10 @@ namespace TheBlogProject.Controllers
             return View(await blogs);
         }
 
-        public IActionResult About()
-        {
-            return View();
-        }
+        //public IActionResult About()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Contact()
         {

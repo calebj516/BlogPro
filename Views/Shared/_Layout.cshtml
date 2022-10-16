@@ -45,8 +45,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="About">About</a></li>
+                        @*<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index">Home</a></li>*@
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="https://github.com/calebj516/TheBlogProject" target="_blank">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
                         @if(User.IsInRole("Administrator"))
@@ -100,15 +100,15 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a href="#!">
+                            <a href="https://www.linkedin.com/in/caleb-d-jones/" target="_blank">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!">
+                            <a href="https://www.facebook.com/caleb.jones.754" target="_blank">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
@@ -116,7 +116,7 @@
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!">
+                            <a href="https://github.com/calebj516" target="_blank">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
@@ -124,7 +124,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2022</div>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Blog Project 2022</div>
                     </div>
                 </div>
             </div>
