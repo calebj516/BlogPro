@@ -1,0 +1,77 @@
+﻿@using TheBlogProject.Services;
+@using TheBlogProject.Models;
+
+@inject IImageService imageService
+@model IEnumerable<Post>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 class="text-center">Tag Index</h1>
+
+
+<p>
+    <a asp-action="Create">Create New Post</a>
+</p>
+
+
+
+<table id="PostTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Abstract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th class="ps-5">
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            @*Empty th added in order for Datatables plug-in to function*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*DisplayFor displays the value associated with the property, not the property's name*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abstract)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    <img class="img-fluid" width="200px;" src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a> |
+                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |
+                    <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PostTable').DataTable();
+        });
+    </script>
+}

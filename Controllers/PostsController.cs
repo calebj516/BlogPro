@@ -13,6 +13,9 @@ using TheBlogProject.Enums;
 using X.PagedList;
 using TheBlogProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Drawing.Printing;
+using MailKit.Search;
 
 namespace TheBlogProject.Controllers
 {
@@ -51,6 +54,15 @@ namespace TheBlogProject.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Posts that have a matching tag
+        public async Task<IActionResult> TagIndex(string tag)
+        {
+            var applicationDbContext = _context.Posts
+                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag));
+
             return View(await applicationDbContext.ToListAsync());
         }
 
