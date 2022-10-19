@@ -61,9 +61,19 @@ namespace TheBlogProject.Controllers
         public async Task<IActionResult> TagIndex(string tag)
         {
             var applicationDbContext = _context.Posts
-                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag));
+                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()));
 
             return View(await applicationDbContext.ToListAsync());
+
+            //var pageNumber = page ?? 1;
+            //var pageSize = 6;
+
+            //var posts = await _context.Posts
+            //    .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()))
+            //    .OrderByDescending(p => p.Created)
+            //    .ToPagedListAsync(pageNumber, pageSize);
+
+            //return View(posts);
         }
 
         // GET: Posts/Details/5

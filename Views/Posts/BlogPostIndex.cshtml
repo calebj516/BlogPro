@@ -78,7 +78,10 @@
     }
     else
     {
-        <header>
-            <h1 class="text-danger text-center">There are no posts to display!</h1>
-        </header>
+       <h1 class="text-danger text-center">There are no posts to display!</h1>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary col-4 my-5" asp-action="Index" asp-controller="Home">
+                Back to Home
+            </a>
+        </div>
     }
