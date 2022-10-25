@@ -44,7 +44,7 @@ namespace TheBlogProject.Controllers
             .ToPagedListAsync(pageNumber, pageSize);
 
             ViewData["HeaderImage"] = Url.Content("~/images/home-bg.jpg");
-            ViewData["MainText"] = "CF Blog Application";
+            ViewData["MainText"] = "My Blog App";
             ViewData["SubText"] = "Built using .NET 6 MVC & Bootstrap 5";
 
             return View(await blogs);

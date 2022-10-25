@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Drawing.Printing;
 using MailKit.Search;
+using Microsoft.Extensions.Hosting;
 
 namespace TheBlogProject.Controllers
 {
@@ -58,22 +59,25 @@ namespace TheBlogProject.Controllers
         }
 
         // GET: Posts that have a matching tag
-        public async Task<IActionResult> TagIndex(string tag)
+        public async Task<IActionResult> TagIndex(string tag, int? page)
         {
-            var applicationDbContext = _context.Posts
-                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()));
+            //var applicationDbContext = _context.Posts
+            //    .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()));
 
-            return View(await applicationDbContext.ToListAsync());
+            //return View(await applicationDbContext.ToListAsync());
 
-            //var pageNumber = page ?? 1;
-            //var pageSize = 6;
+            var pageNumber = page ?? 1;
+            var pageSize = 6;
 
-            //var posts = await _context.Posts
-            //    .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()))
-            //    .OrderByDescending(p => p.Created)
-            //    .ToPagedListAsync(pageNumber, pageSize);
+            var posts = await _context.Posts
+                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tag.ToLower()))
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
-            //return View(posts);
+            ViewData["MainText"] = $"All Posts that Include the Tag \"{ tag }\"";
+            ViewData["tag"] = tag;
+
+            return View(posts);
         }
 
         // GET: Posts/Details/5
