@@ -52,10 +52,22 @@ namespace TheBlogProject.Controllers
 
         // GET: Posts
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
+            //return View(await applicationDbContext.ToListAsync());
+
+            var pageNumber = page ?? 1; // if page is null, 1
+            var pageSize = 6;
+
+            var posts = _context.Posts.Include(p => p.Blog)
+            .Include(p => p.BlogUser)
+            .OrderByDescending(b => b.Created)
+            .ToPagedListAsync(pageNumber, pageSize);
+
+            ViewData["MainText"] = "Post Index";
+
+            return View(await posts);
         }
 
         // GET: Posts that have a matching tag
