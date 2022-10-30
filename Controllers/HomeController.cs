@@ -41,7 +41,7 @@ namespace TheBlogProject.Controllers
             var blogs = _context.Blogs
             .Include(b => b.BlogUser)
             .OrderByDescending(b => b.Created)
-            .ToPagedListAsync(pageNumber, pageSize);
+            .ToPagedListAsync(pageNumber, pageSize);            
 
             ViewData["HeaderImage"] = Url.Content("~/images/home-bg.jpg");
             ViewData["MainText"] = "My Blog App";

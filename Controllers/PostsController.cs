@@ -183,10 +183,7 @@ namespace TheBlogProject.Controllers
             {
                 ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
             }
-            else
-            {
-                ViewData["HeaderImage"] = Url.Content("~/images/home-bg.png");
-            }
+
             ViewData["MainText"] = post.Title;
             ViewData["SubText"] = post.Abstract;
 

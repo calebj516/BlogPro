@@ -156,6 +156,10 @@ button.btn-sm, a.btn-sm {
     height: 150px;
 }
 
+.tagCard {
+/*    min-width: 250px;
+*/}
+
 /* PAGE STYLES */
 .page-item.active .page-link {
     background-color: #212121;
@@ -201,6 +205,11 @@ div.swal2-container.swal2.center.swal2-backdrop-show > div {
 .tagView {
     max-height: 300px;
     overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.tagView a {
+    min-width: 200px;
 }
 
 /* WEBKIT SCROLLBAR STYLES */

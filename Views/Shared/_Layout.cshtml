@@ -1,5 +1,8 @@
 ﻿@{
-    ViewData["HeaderImage"] = Url.Content("~/images/home-bg.jpg");
+    if(ViewData["HeaderImage"] == null)
+    {
+        ViewData["HeaderImage"] = Url.Content("~/images/home-bg.jpg");
+    }
 }
 
 <!DOCTYPE html>
