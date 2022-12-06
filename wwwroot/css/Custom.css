@@ -230,3 +230,7 @@ div.swal2-container.swal2.center.swal2-backdrop-show > div {
 .postBody {
     overflow-wrap: break-word;
 }
+
+footer {
+    background-color: #fff0d9;
+}
