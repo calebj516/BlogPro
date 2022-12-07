@@ -1,2 +1,2 @@
-# TheBlogProject
+# BlogPro
  Coder Foundry Blog Project
