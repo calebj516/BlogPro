@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,7 @@ using TheBlogProject.Services;
 
 namespace TheBlogProject.Areas.Identity.Pages.Account
 {
+    [ValidateReCaptcha]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
@@ -126,7 +128,6 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
