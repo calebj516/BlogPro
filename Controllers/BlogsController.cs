@@ -103,7 +103,9 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blogs.FindAsync(id);
+            var authorId = _userManager.GetUserId(User);
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == id && b.BlogUserId == authorId);
+
             if (blog == null)
             {
                 return NotFound();
@@ -194,17 +196,15 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Blogs == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Blogs'  is null.");
-            }
-            var blog = await _context.Blogs.FindAsync(id);
+            var authorId = _userManager.GetUserId(User);
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == id && b.BlogUserId == authorId);
+
             if (blog != null)
             {
                 _context.Blogs.Remove(blog);
+                await _context.SaveChangesAsync();
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -306,7 +306,8 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Slug == slug);
+            var authorId = _userManager.GetUserId(User);
+            var post = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Slug == slug && p.BlogUserId == authorId);
 
             if (post == null)
             {
@@ -447,17 +448,16 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Posts == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Posts'  is null.");
-            }
-            var post = await _context.Posts.FindAsync(id);
+            var authorId = _userManager.GetUserId(User);
+
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == id && p.BlogUserId == authorId);
+
             if (post != null)
             {
                 _context.Posts.Remove(post);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

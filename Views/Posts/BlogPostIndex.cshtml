@@ -12,7 +12,7 @@
 
 @model IPagedList<Post>
 
-<div class="row">
+<div class="row gx-4 gx-lg-5 justify-content-center">
 
     @if (Model.Count > 0)
     {
@@ -55,30 +55,28 @@
             </div>
         }
 
-        <hr />
-
-        <div class="row">
+        <div class="row mt-4">
             <div class="col h3">
                 Page @(
                Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber
                ) of @Model.PageCount
             </div>
         </div>
-    <div class="row">
+        <div class="row mt-3">
             <div class="col">
-            @Html.PagedListPager(Model, page => Url.Action("BlogPostIndex", new { id = Model.FirstOrDefault().BlogId, page = page }),
+                @Html.PagedListPager(Model, page => Url.Action("BlogPostIndex", new { id = Model.FirstOrDefault().BlogId, page = page }),
             new PagedListRenderOptionsBase
             {
             LiElementClasses = new string[] { "page-item" },
             PageClasses = new string[] { "page-link" }
             })
+            </div>
         </div>
-    </div>
 
     }
     else
     {
-       <h1 class="text-danger text-center">There are no posts to display!</h1>
+        <h1 class="text-danger text-center">There are no posts to display!</h1>
         <div class="d-flex justify-content-center">
             <a class="btn btn-primary col-4 my-5" asp-action="Index" asp-controller="Home">
                 Back to Home

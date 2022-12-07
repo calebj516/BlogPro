@@ -25,7 +25,8 @@ namespace TheBlogProject.Controllers
         // GET: Comments
         public async Task<IActionResult> OriginalIndex()
         {
-            var originalComments = await _context.Comments.ToListAsync();
+            var blogUserId = _userManager.GetUserId(User);
+            var originalComments = await _context.Comments.Where(c => c.BlogUserId == blogUserId).ToListAsync();
             return View("Index", originalComments);
         }
 
@@ -42,7 +43,8 @@ namespace TheBlogProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allComments = await _context.Comments.Where(c => c.PostId == c.Post.Id).ToListAsync();
+            var authorId = _userManager.GetUserId(User);
+            var allComments = await _context.Comments.Where(c => c.PostId == c.Post.Id && c.BlogUserId == authorId).ToListAsync();
             return View(allComments);
         }
 
@@ -84,7 +86,9 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
+            var authorId = _userManager.GetUserId(User);
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id && c.BlogUserId == authorId);
+
             if (comment == null)
             {
                 return NotFound();
@@ -139,7 +143,7 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment)
         {
-            if(id != comment.Id)
+            if (id != comment.Id)
             {
                 return NotFound();
             }
@@ -181,11 +185,13 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
+            var authorId = _userManager.GetUserId(User);
             var comment = await _context.Comments
                 .Include(c => c.BlogUser)
                 .Include(c => c.Moderator)
                 .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && m.BlogUserId == authorId);
+
             if (comment == null)
             {
                 return NotFound();
@@ -199,19 +205,21 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, string slug)
         {
-            if (_context.Comments == null)
+            var authorId = _userManager.GetUserId(User);
+            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id && c.BlogUserId == authorId);
+
+            if (comment != null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Comments'  is null.");
+                _context.Comments.Remove(comment);
+                await _context.SaveChangesAsync();
             }
-            var comment = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comment);        
-            await _context.SaveChangesAsync();
+
             return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
         }
 
         private bool CommentExists(int id)
         {
-          return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
