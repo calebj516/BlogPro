@@ -24,7 +24,7 @@ using TheBlogProject.Services;
 
 namespace TheBlogProject.Areas.Identity.Pages.Account
 {
-    [ValidateReCaptcha]
+    
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
