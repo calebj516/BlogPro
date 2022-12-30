@@ -69,6 +69,7 @@
         </div>
     </div>
 
+    <hr />
     <!-- Add Paging controls here -->
     <div class="row mt-4">
         <div class="col h3">
@@ -92,6 +93,11 @@
 else
 {
     <h1 class="text-danger text-center">There are no blogs to display!</h1>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary col-4 my-5" asp-action="Index" asp-controller="Home">
+            Back to Home
+        </a>
+    </div>
 }
 
 @section Scripts {
